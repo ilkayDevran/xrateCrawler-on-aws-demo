@@ -1,0 +1,8 @@
+{
+    "MySQL": {
+            "USERNAME": "admin",
+            "PASSWORD": "12332111",
+            "DATABASE": "xratesCrawlerDB",
+            "HOST": "xratecrawlerrds.cm8c8lhbomw2.eu-west-1.rds.amazonaws.com"
+    }
+}
