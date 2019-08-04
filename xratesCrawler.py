@@ -26,9 +26,6 @@ class Database():
                 , db = obj['MySQL']['DATABASE']
                 , charset='utf8')
 
-    def constructDB(self):
-        self.c.execute("CREATE TABLE usd (date text, name text, sell real, buy real)")
-
     def execute(self, command):
         with self.conn.cursor() as cur:
             cur.execute(command)
@@ -81,7 +78,7 @@ class xratesCrawler:
         for row in rows:
             cols = row.find_all('td')
             cols = [ele.text.strip() for ele in cols]
-            data.append([ele for ele in cols if ele]) # Get rid of empty values
+            data.append([ele for ele in cols if ele])
 
         return data
 
