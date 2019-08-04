@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from datetime import datetime, timedelta, date
+from datetime import date
 from bs4 import BeautifulSoup
 import requests 
 import pymysql
@@ -25,14 +25,13 @@ class Database():
                 , passwd = obj['MySQL']['PASSWORD']
                 , db = obj['MySQL']['DATABASE']
                 , charset='utf8')
-        self.cur = self.conn.cursor()
 
     def execute(self, command):
-        self.cur.execute(command)
-    
-    def fetchall(self):
-        return self.cur.fetchall()
-    
+        with self.conn.cursor() as cur:
+            cur.execute(command)
+            results = cur.fetchall()
+        cur.close()
+
     def commit(self):
         self.conn.commit()
 
@@ -84,6 +83,6 @@ class xratesCrawler:
         return data
 
 def lambda_handler(event, context):
-    yourName = '' # Edit here as your name with lowercase and english characters
+    yourName = '<{yourname}>' # Edit here as your name with lowercase and english characters
     crawler = xratesCrawler()
     crawler.run(yourName)
