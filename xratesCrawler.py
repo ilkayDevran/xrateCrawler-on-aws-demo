@@ -85,4 +85,4 @@ class xratesCrawler:
 def lambda_handler(event, context):
     yourName = '' # Edit here as your name with lowercase and english characters
     crawler = xratesCrawler()
-    crawler.run(yourName.lower())
+    crawler.run(yourName)
