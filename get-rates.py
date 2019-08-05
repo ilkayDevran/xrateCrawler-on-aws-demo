@@ -1,5 +1,10 @@
 # -*- coding: UTF-8 -*-
 
+"""
+    We are going to use this to set parameters of our API
+    { "yourname" : "$input.params("yourname")" }
+"""
+
 import pymysql
 import json
 
@@ -38,12 +43,15 @@ class Database():
 
     
 def lambda_handler(event, context):
-    select_query = ("""SELECT USDolar, Euro FROM xratesCrawlerDB.TRYRATES WHERE Name = '{}' """).format(event['YourName'])
+    select_query = ("""SELECT USDolar, Euro, InsertDate FROM xratesCrawlerDB.TRYRATES WHERE Name = '{}' LIMIT 100;""").format(event['yourname'])
     db = Database()
     db.execute(select_query)
-    results = {'results': db.fetch_all()}
-    print results
+    results = db.fetch_all()
+    results = list(map(lambda x: {'USDolar': x[0], 'Euro': x[1], 'Date': str(x[2])}, results))
+    
+    #print (results)
+    
     return {
         'statusCode': 200,
-        'body': json.dumps(results)
+        'data': results
     }
